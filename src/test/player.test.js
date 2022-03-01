@@ -1,4 +1,4 @@
-import { player } from "../player.js"
+import { player, cpu } from "../player.js"
 import { createGameboard } from "../createGameboard"
 
 describe("player", () => {
@@ -57,16 +57,38 @@ describe("player", () => {
 
 		expect(enemyBoard.ships[0].length[0]).toBe(1)
 	})
+
+	test("attacking should remove those coords from attackArray", () => {
+		let tate = player("tate", true)
+		let enemy = player("enemy", false)
+		let tateBoard = createGameboard()
+		let enemyBoard = createGameboard()
+
+		enemyBoard.placeShip(0, 0, 3, "h")
+		tate.attack(enemy, enemyBoard, 0, 0)
+
+		let attackedSpot = enemy.attackArray.find((coord) => {
+			return coord[0] === 0 && coord[1] === 0
+		})
+
+		// coords 0,0 should be gone from the array of attackable spots
+		expect(attackedSpot).toBe(undefined)
+	})
+
+	test("randomAttack should pick random coordinates from attackArray and make attack", () => {
+		let tate = player("tate", true)
+		let enemy = cpu("enemy", false)
+		let tateBoard = createGameboard()
+		let enemyBoard = createGameboard()
+
+		tate.endTurn(enemy)
+		enemy.randomAttack(tate, tateBoard)
+
+		console.log(tateBoard.board)
+		let damagedRow = tateBoard.board.find((row) => {
+			return row.includes("miss")
+		})
+
+		expect(damagedRow).not.toBe(undefined)
+	})
 })
-
-/*
-players can:
-
-have name
-end turn, given a player to start turn
-start turn, given a player to end turn
-can attack enemy player, given:
-	-coordinates
-	-enemy player so their turn can start
-	-enemy gameboard to take coordinates
-*/

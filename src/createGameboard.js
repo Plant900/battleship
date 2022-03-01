@@ -26,7 +26,7 @@ function createGameboard() {
 	function receiveAttack(x, y) {
 		let attack = board[x][y]
 		if (attack === undefined) {
-			attack = "miss"
+			board[x][y] = "miss"
 		} else {
 			// since attack did hit a ship, find the ship in the ships array with the matching name
 			let target = ships.find((ship) => {
