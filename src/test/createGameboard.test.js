@@ -36,4 +36,11 @@ describe("createGameboard", () => {
 	test("allSunk should return true if all ships on board are sunk", () => {
 		expect(gameboard.allSunk()).toBe(true)
 	})
+
+	test("receiveAttack should update hiddenBoard", () => {
+		expect(gameboard.hiddenBoard[0][0]).toBe("hit")
+		expect(gameboard.hiddenBoard[3][0]).toBe("miss")
+	})
+
+	test("receiveAttack should only receive if attack has not been made", () => {})
 })

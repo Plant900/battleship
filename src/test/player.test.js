@@ -58,7 +58,7 @@ describe("player", () => {
 		expect(enemyBoard.ships[0].length[0]).toBe(1)
 	})
 
-	test("attacking should remove those coords from attackArray", () => {
+	test("attacking should remove those coords from attackableSpots", () => {
 		let tate = player("tate", true)
 		let enemy = player("enemy", false)
 		let tateBoard = createGameboard()
@@ -67,7 +67,7 @@ describe("player", () => {
 		enemyBoard.placeShip(0, 0, 3, "h")
 		tate.attack(enemy, enemyBoard, 0, 0)
 
-		let attackedSpot = enemy.attackArray.find((coord) => {
+		let attackedSpot = enemy.attackableSpots.find((coord) => {
 			return coord[0] === 0 && coord[1] === 0
 		})
 
@@ -75,7 +75,7 @@ describe("player", () => {
 		expect(attackedSpot).toBe(undefined)
 	})
 
-	test("randomAttack should pick random coordinates from attackArray and make attack", () => {
+	test("randomAttack should pick random coordinates from attackableSpots and make attack", () => {
 		let tate = player("tate", true)
 		let enemy = cpu("enemy", false)
 		let tateBoard = createGameboard()
