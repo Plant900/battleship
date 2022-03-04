@@ -41,6 +41,7 @@ function createGameboard() {
 			})
 
 			target.hit(attack[1])
+			board[y][x].push("hit")
 			hiddenBoard[y][x] = "hit"
 		}
 	}
