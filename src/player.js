@@ -67,6 +67,10 @@ function cpu(name, turn) {
 	let prototype = player(name, turn)
 
 	function randomAttack(enemyPlayer, enemyBoard) {
+		// if (this.turn !== true) {
+		// 	return
+		// }
+
 		let attackedIndex = getRandomInt(0, enemyPlayer.attackableSpots.length)
 		let attackedCoords = enemyPlayer.attackableSpots[attackedIndex]
 
@@ -74,9 +78,7 @@ function cpu(name, turn) {
 
 		enemyPlayer.attackableSpots.splice(attackedIndex, 1)
 
-		if (this.turn === true) {
-			this.endTurn(enemyPlayer)
-		}
+		this.endTurn(enemyPlayer)
 	}
 
 	function getRandomInt(min, max) {

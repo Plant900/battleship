@@ -16,12 +16,16 @@
 	margin: 0;
 }
 
-.gameContainer {
+#gameContainer {
 	display: flex;
 	justify-content: center;
 
 	gap: 50px;
 	margin-top: 100px;
+}
+#board1,
+#board2 {
+	display: none;
 }
 
 .board {
@@ -46,11 +50,14 @@
 	border-style: solid;
 }
 
-.cpuCell:hover {
-	cursor: pointer;
+.shipCell {
+	background-color: rgb(59, 134, 59);
 }
 
-.missedCell {
-	background-color: rgb(65, 65, 247);
-	border-color: rgb(65, 65, 247);
+.hitShipCell {
+	background-color: rgb(173, 45, 45);
+}
+
+.cpuCell:hover {
+	cursor: pointer;
 }
