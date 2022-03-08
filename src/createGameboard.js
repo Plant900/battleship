@@ -14,12 +14,21 @@ function createGameboard() {
 
 	let ships = []
 
-	function placeShip(y, x, length, direction) {
+	function placeShip(y, x, direction, length) {
+		if (!length) {
+			length = detectShipToPlace()
+		}
+
+		if (!checkPlacement(y, x, direction, length)) {
+			return
+		}
+
 		let newShip = createShip(length)
 		ships.push(newShip)
 
 		//the name of the ship is put on each coordinate where it is located
 		//as well as a number indicating which 'spot' on the ship it is
+
 		for (let i = 0; i < length; i++) {
 			if (direction == "h") {
 				board[y][x + i] = [newShip.name, i]
@@ -27,6 +36,51 @@ function createGameboard() {
 				board[y + i][x] = [newShip.name, i]
 			}
 		}
+	}
+
+	// when initializing board at start, ships will be placed sequentially
+	// starting from carrier moving down. This function checks the ship array
+	// to see which one needs to be placed next, returning appropriate length
+	// to pass into createShip
+
+	function detectShipToPlace() {
+		if (ships.length === 0) {
+			return 5
+		}
+		if (ships.length === 1) {
+			return 4
+		}
+		if (ships.length === 2 || ships.length === 3) {
+			return 3
+		}
+		if (ships.length === 4) {
+			return 2
+		}
+	}
+
+	// update tests for this
+	function checkPlacement(y, x, direction, length) {
+		if (direction === "h") {
+			if (x + length > 10) {
+				return false
+			}
+			for (let i = 0; i < x + length; i++) {
+				if (board[y][x + i]) {
+					return false
+				}
+			}
+		}
+		if (direction === "v") {
+			if (y + length > 10) {
+				return false
+			}
+			for (let i = 0; i < y + length; i++) {
+				if (board[y + i][x]) {
+					return false
+				}
+			}
+		}
+		return true
 	}
 
 	function receiveAttack(y, x) {
@@ -58,6 +112,7 @@ function createGameboard() {
 		ships,
 		placeShip,
 		receiveAttack,
+		checkPlacement,
 		allSunk,
 	}
 }
