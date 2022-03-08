@@ -66,4 +66,13 @@ describe("createGameboard", () => {
 
 		expect(board.board[0][6]).toBe(undefined)
 	})
+
+	test("placeShip should not overlap ships", () => {
+		board = createGameboard()
+		board.placeShip(0, 1, "v", 5)
+		board.placeShip(0, 0, "h", 5)
+
+		expect(board.board[0][0]).toBe(undefined)
+		expect(board.board[0][1]).toEqual(["aircraftCarrier", 0])
+	})
 })
