@@ -52,7 +52,7 @@ describe("player", () => {
 		let tateBoard = createGameboard()
 		let enemyBoard = createGameboard()
 
-		enemyBoard.placeShip(0, 0, 3, "h")
+		enemyBoard.placeShip(0, 0, "h", 3)
 		tate.attack(enemy, enemyBoard, 0, 0)
 
 		expect(enemyBoard.ships[0].length[0]).toBe(1)
@@ -64,7 +64,7 @@ describe("player", () => {
 		let tateBoard = createGameboard()
 		let enemyBoard = createGameboard()
 
-		enemyBoard.placeShip(0, 0, 3, "h")
+		enemyBoard.placeShip(0, 0, "h", 3)
 		tate.attack(enemy, enemyBoard, 0, 0)
 
 		let attackedSpot = enemy.attackableSpots.find((coord) => {
@@ -84,7 +84,6 @@ describe("player", () => {
 		tate.endTurn(enemy)
 		enemy.randomAttack(tate, tateBoard)
 
-		console.log(tateBoard.board)
 		let damagedRow = tateBoard.board.find((row) => {
 			return row.includes("miss")
 		})
