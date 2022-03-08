@@ -39,6 +39,11 @@
 	height: 450px;
 }
 
+#directionBtn {
+	border-style: none;
+	color: gray;
+}
+
 .cell {
 	flex: 1 0 9%;
 	display: flex;
@@ -48,6 +53,10 @@
 	border-color: rgb(78, 78, 78);
 	border-width: 1px;
 	border-style: solid;
+}
+
+.cell:hover {
+	cursor: pointer;
 }
 
 .shipCell {
@@ -60,4 +69,8 @@
 
 .cpuCell:hover {
 	cursor: pointer;
+}
+
+.addShipHover {
+	background-color: blanchedalmond;
 }
