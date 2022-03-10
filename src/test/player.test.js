@@ -90,4 +90,15 @@ describe("player", () => {
 
 		expect(damagedRow).not.toBe(undefined)
 	})
+
+	test("placeRandom should place each of the 5 ships in a random spot", () => {
+		let enemy = cpu("enemy", true)
+		let enemyBoard = createGameboard()
+
+		while (enemyBoard.ships.length < 5) {
+			enemy.placeRandom(enemyBoard)
+		}
+
+		expect(enemyBoard.ships.length).toBe(5)
+	})
 })
