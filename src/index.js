@@ -4,6 +4,7 @@ import { createShip } from "./createShip.js"
 import "./styles.css"
 
 function cacheDom() {
+	let title = document.querySelector(".title")
 	let board1Message = document.querySelector("#board1Message")
 	let directionBtn = document.querySelector("#directionBtn")
 	let player1Dom = document.querySelector("#board1")
@@ -12,6 +13,7 @@ function cacheDom() {
 	let cpuCells = Array.from(document.querySelectorAll(".cpuCell"))
 
 	return {
+		title,
 		board1Message,
 		directionBtn,
 		player1Dom,
@@ -24,15 +26,21 @@ let dom = cacheDom()
 
 let player1 = player("player1", false)
 let player1Board = createGameboard()
-
 let cpu1 = cpu("cpu", false)
 let cpu1Board = createGameboard()
-cpu1Board.placeShip(0, 0, "h", 3)
-cpu1Board.placeShip(1, 0, "h", 5)
+cpu1.placeRandom(cpu1Board)
+renderStart()
+dom.title.addEventListener("click", () => {
+	resetGame()
+})
 
 function renderStart() {
 	dom.player1Dom.style.display = "flex"
+	dom.directionBtn.style.display = "flex"
+	dom.board1Message.style.display = "flex"
 	dom.player1Dom.innerHTML = ""
+	dom.player2Dom.style.display = "none"
+	dom.player2Dom.innerHTML = ""
 
 	player1Board.board.forEach((row, yIndex) => {
 		row.forEach((cell, xIndex) => {
@@ -62,7 +70,6 @@ function renderStart() {
 
 	checkIfReady()
 }
-renderStart()
 
 dom.directionBtn.addEventListener("click", (e) => {
 	if (e.target.dataset.direction === "h") {
@@ -161,6 +168,8 @@ function getMessageStart() {
 function checkIfReady() {
 	if (player1Board.ships.length === 5) {
 		console.log("ready")
+		dom.board1Message.style.display = "none"
+		dom.directionBtn.style.display = "none"
 		renderBoards()
 	}
 }
@@ -221,7 +230,7 @@ function determineCellDisplay(cell) {
 		return "&nbsp"
 	}
 	if (cell === "miss") {
-		return "x"
+		return "&#10060;"
 	}
 
 	return ""
@@ -234,6 +243,10 @@ function clickEvent(e) {
 	coords = coords.split(",").map((item) => {
 		return parseInt(item, 10)
 	})
+
+	if (!player1.checkIfAttackValid(cpu1Board, coords[0], coords[1])) {
+		return
+	}
 
 	player1.attack(cpu1, cpu1Board, coords[0], coords[1])
 	cpu1.randomAttack(player1, player1Board)
@@ -249,9 +262,17 @@ function clickEvent(e) {
 
 function winEvent(player) {
 	alert(`${player.name} wins!`)
+	resetGame()
 }
 
-// let players place ships
+function resetGame() {
+	player1 = player("player1", false)
+	player1Board = createGameboard()
+	cpu1 = cpu("cpu", false)
+	cpu1Board = createGameboard()
+	cpu1.placeRandom(cpu1Board)
+	renderStart()
+}
+
 // display player names
 // let player change name
-// start game/end game events
