@@ -14,6 +14,8 @@
 	font-size: 40px;
 
 	margin: 0;
+
+	cursor: pointer;
 }
 
 #gameContainer {
@@ -39,9 +41,19 @@
 	height: 450px;
 }
 
+#board1Message {
+	font-size: 25px;
+}
+
 #directionBtn {
+	display: none;
 	border-style: none;
 	color: gray;
+
+	padding: 5px;
+	margin-bottom: 5px;
+
+	cursor: pointer;
 }
 
 .cell {
@@ -53,6 +65,13 @@
 	border-color: rgb(78, 78, 78);
 	border-width: 1px;
 	border-style: solid;
+
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .cell:hover {
