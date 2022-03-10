@@ -1,17 +1,23 @@
 export { createShip }
 
-function createShip(shipLength) {
+function createShip(shipLength, ships) {
 	let length = []
 	for (let i = 1; i <= shipLength; i++) {
 		length.push(0)
 	}
 
+	let doesCruiserExist = ships.some((ship) => {
+		return ship.name === "cruiser"
+	})
+
 	let name
 	if (length.length == 2) {
 		name = "destroyer"
 	}
-	if (length.length == 3) {
+	if (length.length == 3 && doesCruiserExist === false) {
 		name = "cruiser"
+	} else if (length.length == 3 && doesCruiserExist === true) {
+		name = "submarine"
 	}
 	if (length.length == 4) {
 		name = "battleship"

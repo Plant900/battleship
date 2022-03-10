@@ -23,7 +23,7 @@ function createGameboard() {
 			return
 		}
 
-		let newShip = createShip(length)
+		let newShip = createShip(length, ships)
 		ships.push(newShip)
 
 		//the name of the ship is put on each coordinate where it is located
@@ -58,13 +58,12 @@ function createGameboard() {
 		}
 	}
 
-	// update tests for this
 	function checkPlacement(y, x, direction, length) {
 		if (direction === "h") {
 			if (x + length > 10) {
 				return false
 			}
-			for (let i = 0; i < x + length; i++) {
+			for (let i = 0; i < length; i++) {
 				if (board[y][x + i]) {
 					return false
 				}
@@ -74,7 +73,7 @@ function createGameboard() {
 			if (y + length > 10) {
 				return false
 			}
-			for (let i = 0; i < y + length; i++) {
+			for (let i = 0; i < length; i++) {
 				if (board[y + i][x]) {
 					return false
 				}
