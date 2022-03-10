@@ -28,13 +28,21 @@ function player(name, turn) {
 		}
 	}
 
+	function checkIfAttackValid(enemyBoard, y, x) {
+		if (enemyBoard.hiddenBoard[y][x]) {
+			return false
+		} else {
+			return true
+		}
+	}
+
 	function attack(enemyPlayer, enemyBoard, y, x) {
 		// if a spot has already been hit, then it will be defined on hiddenBoard
 		// so the rest will only work if the spot has not already been hit
-		if (enemyBoard.hiddenBoard[y][x]) {
+
+		if (!checkIfAttackValid(enemyBoard, y, x)) {
 			return
 		}
-
 		enemyBoard.receiveAttack(y, x)
 		let attackedIndex = findCoordsIndex(enemyPlayer.attackableSpots, y, x)
 		enemyPlayer.attackableSpots.splice(attackedIndex, 1)
@@ -59,6 +67,7 @@ function player(name, turn) {
 		attackableSpots,
 		endTurn,
 		startTurn,
+		checkIfAttackValid,
 		attack,
 	}
 }
@@ -85,5 +94,29 @@ function cpu(name, turn) {
 		return Math.floor(Math.random() * (max - min) + min)
 	}
 
-	return Object.assign({}, prototype, { randomAttack })
+	function placeRandom(board) {
+		if (!board) {
+			return
+		}
+
+		while (board.ships.length < 5) {
+			let yCoord = getRandomInt(0, 10)
+			let xCoord = getRandomInt(0, 10)
+			let direction = getRandomInt(0, 2)
+
+			if (direction === 0) {
+				direction = "h"
+			} else {
+				direction = "v"
+			}
+
+			board.placeShip(yCoord, xCoord, direction)
+		}
+
+		// while (board.ships.length < 5) {
+		// 	board.placeShip(yCoord, xCoord, direction)
+		// }
+	}
+
+	return Object.assign({}, prototype, { randomAttack, placeRandom })
 }
